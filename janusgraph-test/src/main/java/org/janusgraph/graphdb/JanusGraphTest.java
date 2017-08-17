@@ -4682,7 +4682,7 @@ public abstract class JanusGraphTest extends JanusGraphBaseTest {
         assertNotEmpty(v2.query().direction(Direction.OUT).vertices());
         assertNotEmpty(v3.query().direction(Direction.OUT).vertices());
 
-        Thread.sleep(commitTime + (ttl1 * 1000L + 200) - System.currentTimeMillis());
+        Thread.sleep(commitTime + (ttl1 * 1000L + 1000) - System.currentTimeMillis());
         graph.tx().rollback();
 
         // e1 has dropped out
@@ -4690,7 +4690,7 @@ public abstract class JanusGraphTest extends JanusGraphBaseTest {
         assertNotEmpty(v2.query().direction(Direction.OUT).vertices());
         assertNotEmpty(v3.query().direction(Direction.OUT).vertices());
 
-        Thread.sleep(commitTime + (ttl2 * 1000L + 500) - System.currentTimeMillis());
+        Thread.sleep(commitTime + (ttl2 * 1000L + 1000) - System.currentTimeMillis());
         graph.tx().rollback();
 
         // both e1 and e2 have dropped out.  e3 has no TTL, and so remains
@@ -4727,7 +4727,7 @@ public abstract class JanusGraphTest extends JanusGraphBaseTest {
         // still here, because we have just committed the edge.  Its countdown starts at the commit
         assertNotEmpty(v1.query().direction(Direction.OUT).vertices());
 
-        Thread.sleep(1001);
+        Thread.sleep(1501);
 
         // the edge has expired in Cassandra, but still appears alive in this transaction
         assertNotEmpty(v1.query().direction(Direction.OUT).vertices());
@@ -4850,7 +4850,7 @@ public abstract class JanusGraphTest extends JanusGraphBaseTest {
         assertNotNull(v1);
         assertNotEmpty(graph.query().has("name", "some event").vertices());
 
-        Thread.sleep(1001);
+        Thread.sleep(1501);
         graph.tx().rollback();
 
         v1 = getV(graph, id);
